@@ -1,0 +1,133 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(30, 30, 30);
+    color: whitesmoke;
+    accent-color: #292929;
+    transform: translateY(-2vh);
+  }
+
+  body {
+    line-height: 1.6;
+    min-height: 95vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Wrapper */
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 1rem;
+    margin: 0 auto;
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .title {
+    font-size: clamp(1rem, 1.5vw, 2rem);
+    min-width: 240px;
+    max-width: 640px;
+  }
+
+  .input {
+    font-size: clamp(1rem, 1.1vw, 1.4rem);
+    min-width: 240px;
+    max-width: 540px;
+    width: calc(80vw);
+  }
+
+  A {
+    color: whitesmoke;
+    font-size: clamp(0.7rem, 1vw, 1.5rem);
+    text-decoration: none;
+    max-width: 80%;
+    height: auto;
+    margin: auto;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+  }
+
+  button {
+    padding: 0.5rem 1rem;
+    border-radius: 0.4rem;
+    border-color: whitesmoke;
+    background: #535557;
+    color: whitesmoke;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: clamp(1rem, 1.2vw, 2rem);
+    font-variant-caps: all-petite-caps;
+    width: calc(10vw);
+    min-width: 240px;
+    max-width: 440px;
+  }
+
+@media (max-width: 900px) {
+  * {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: rgb(30, 30, 30);
+      color: whitesmoke;
+      accent-color: #292929;
+      transform: translateY(-2vh);
+  }
+
+  .container {
+    width: 100%;
+    max-width: 650px;
+    padding: 1rem;
+    margin: 0 auto;
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .title {
+    font-size: clamp(1.2rem, 2.2vw, 3rem);
+    min-width: 240px;
+    max-width: 440px;
+  }
+}
+
+@media (max-width: 520px) {
+  * {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: rgb(30, 30, 30);
+      color: whitesmoke;
+      accent-color: #292929;
+      transform: translateY(-2vh);
+  }
+
+  .container {
+    width: 100%;
+    max-width: 440px;
+    padding: 1rem;
+    margin: 0 auto;
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .title {
+    font-size: clamp(1.2rem, 2.2vw, 3rem);
+    min-width: 240px;
+    max-width: 440px;
+  }
+}
