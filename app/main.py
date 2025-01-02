@@ -1,26 +1,34 @@
 from fasthtml.common import * # type: ignore
 from fasthtml.common import (
-    Button, Html, Head, Body, Div, Title, Titled, Link, Meta, Script, Input, Redirect
+    Button, Html, Head, Body, Div, Title, Titled, Link, Meta, Script, Input, Form, Base, H1, Img, A,
+    Redirect, Response, Path
 )
 import qrcode # type: ignore
+import time
 from datetime import datetime
 import os
 from starlette.responses import FileResponse
 from mimetypes import guess_type
 
 # for Docker
-# app, rt = fast_app(static_path="static") # type: ignore
+app, rt = fast_app(static_path="static") # type: ignore
 
 # for local
-app, rt = fast_app(static_path="app/static") # type: ignore
+# app, rt = fast_app(static_path="app/static") # type: ignore
 
+# handling temp files directory
+temp_dir = Path("app/temp")
+temp_dir.mkdir(parents=True, exist_ok=True)
+
+# generator logic
 def generate_qr_code(url):
     # Ensure the target dir exists (docker)
-    # output_dir = "temp"
+    output_dir = "temp"
+    os.makedirs(output_dir, exist_ok=True)
 
     # Ensure the target dir exists (local)
-    output_dir = "app/temp"
-    os.makedirs(output_dir, exist_ok=True)
+    # output_dir = "app/temp"
+    # os.makedirs(output_dir, exist_ok=True)
 
     # Generate a timestamped filename
     timestamp = datetime.now().strftime("%d-%m-%Y_%H-%M")
@@ -48,6 +56,27 @@ def generate_qr_code(url):
     global extension
     extension = "png"
 
+# removing temp files
+def remove_old_files(folder, seconds):
+    # Calculate the threshold time (in seconds)
+    now = time.time()
+    age_threshold = now - seconds  # 2 days = 2 * 86400 seconds
+
+    for filename in os.listdir(folder):
+        file_path = os.path.join(folder, filename)
+
+        # Check if it's a file
+        if os.path.isfile(file_path):
+            # Get the file's last modified time
+            file_mtime = os.path.getmtime(file_path)
+
+            # Check if the file is older than the threshold
+            if file_mtime < age_threshold:
+                log_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                print(f"LOG: {log_time} - Removing old file: {file_path}")
+                os.remove(file_path)  # Delete the file
+
+# js script for download button
 download_script = """
         function download(filename, extension) {
         const url = `/download/${filename}/${extension}`;
@@ -57,6 +86,8 @@ download_script = """
 
 @rt("/")
 def homepage():
+    time_to_remove = 43200
+    remove_old_files(temp_dir, time_to_remove)  # Removes files older than [in seconds]
     return Html(
         Head(
             Title("QR Code Gen"),
@@ -144,13 +175,25 @@ def code_ready(filename: str, extension: str):
                     cls="container",
                 ),
                 Div(
-                     Button(
-                          "Download QR Code",
-                          onclick=f"download('{filename}', '{extension}')",
-                          cls="container",
-                     ),
+                    Button(
+                        "Download QR Code",
+                        onclick=f"download('{filename}', '{extension}')",
+                        cls="container",
+                    ),
                 ),
-            ),
+                Div(cls="container", style="min-height: 2vw"),
+                Div(
+                    Form(
+                        Button(
+                            "Return",
+                            type="submit",
+                            cls="container",
+                        ),
+                        action="/",
+                        method="get",
+                    ),
+                ),
+            )
         )
 
 
