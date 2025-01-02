@@ -22,13 +22,9 @@ temp_dir.mkdir(parents=True, exist_ok=True)
 
 # generator logic
 def generate_qr_code(url):
-    # Ensure the target dir exists (docker)
-    output_dir = "temp"
+    # Ensure the target dir exists
+    output_dir = "app/temp"
     os.makedirs(output_dir, exist_ok=True)
-
-    # Ensure the target dir exists (local)
-    # output_dir = "app/temp"
-    # os.makedirs(output_dir, exist_ok=True)
 
     # Generate a timestamped filename
     timestamp = datetime.now().strftime("%d-%m-%Y_%H-%M")
@@ -86,7 +82,7 @@ download_script = """
 
 @rt("/")
 def homepage():
-    time_to_remove = 43200
+    time_to_remove = 1200 # Removing generated .png after 20 minutes
     remove_old_files(temp_dir, time_to_remove)  # Removes files older than [in seconds]
     return Html(
         Head(
