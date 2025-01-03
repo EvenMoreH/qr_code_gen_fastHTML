@@ -114,6 +114,7 @@ def homepage():
                     Button(
                         "Generate QR Code",
                         type="submit",
+                        style="min-height: 54px",
                     ),
                     cls="container",
                 ),
