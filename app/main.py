@@ -1,8 +1,4 @@
 from fasthtml.common import * # type: ignore
-from fasthtml.common import (
-    Button, Html, Head, Body, Div, Title, Titled, Link, Meta, Script, Input, Form, Base, H1, Img, A,
-    Redirect, Response, Path
-)
 import qrcode # type: ignore
 import time
 from datetime import datetime
@@ -89,38 +85,44 @@ def homepage():
             Title("QR Code Gen"),
             Meta(name="viewport", content="width=device-width, initial-scale=1"),
             Script(src="https://unpkg.com/htmx.org"),
-            Link(rel="stylesheet", href="styles.css"),
+            Link(rel="stylesheet", href="css/tailwind.css"),
             Link(rel="icon", href="images/favicon.ico", type="image/x-icon"),
             Link(rel="icon", href="images/favicon.png", type="image/png"),
         ),
         Body(
             Div(
-                Titled("QR Code Generator", cls="title"),
-                cls="container",
+                Titled("QR Code Generator",
+                cls="text-3xl md:text-5xl font-bold mb-8 md:p-2 p-0.5 text-center xl:text-center"),
             ),
-            Form(
-                Div(
-                    Input(
-                        id="url",
-                        type="text",
-                        name="url",
-                        required=True,
-                        placeholder="Your URL",
-                        cls="input",
+            Div(
+                Form(
+                    Div(
+                        Input(
+                            id="url",
+                            type="text",
+                            name="url",
+                            required=True,
+                            placeholder="Your URL",
+                            cls="max-w-[80vw] w-80 sm:w-3/5 md:w-2/4 lg:w-1/3 bg-dark-theme-lightgray text-gray-100 pl-2 min-h-9 rounded-md shadow-md shadow-black",
+                        ),
+                        cls="",
                     ),
-                    cls="container",
-                ),
-                Div(
-                    Button(
-                        "Generate QR Code",
-                        type="submit",
-                        style="min-height: 54px",
+                    Div(cls="m-6"),
+                    Div(
+                        Button(
+                            "Generate QR Code",
+                            type="submit",
+                            cls="btn",
+                        ),
+                        cls="",
                     ),
-                    cls="container",
+                    action="/qr",
+                    method="post",
+                    cls="container mx-auto"
                 ),
-                action="/qr",
-                method="post",
-            )
+                cls="container mx-auto items-center text-center pb-[20vh]"
+            ),
+            cls="bg-dark-theme-gray text-gray-100 h-full place-content-center text-lg"
         )
     )
 
@@ -159,37 +161,45 @@ def code_ready(filename: str, extension: str):
                 Script(src="https://unpkg.com/htmx.org"),
                 Script(download_script),
                 Title("QR Code Gen"),
-                Link(rel="stylesheet", href="styles.css"),
+                Link(rel="stylesheet", href="css/tailwind.css"),
                 Link(rel="icon", href="images/favicon.ico", type="image/x-icon"),
                 Link(rel="icon", href="images/favicon.png", type="image/png"),
             ),
             Body(
-                Titled("QR Code Ready"),
+                Titled("QR Code Ready", cls="text-3xl md:text-5xl font-bold mb-8 md:p-2 p-0.5 text-center xl:text-center"),
                 Div(
-                    H1("Preview", style="min-width: 220px", cls="title"),
-                    Img(src=f"/download/{filename}/{extension}", alt="img", style="max-width: clamp(180px, 70vw, 256px); height: auto; margin: auto;"),
-                    A(f"{log_url}", href=f"{log_url}"),
-                    cls="container",
+                    H3("Preview", cls="text-xl md:text-2xl font-bold pb-2 text-center xl:text-center"),
+                    Img(src=f"/download/{filename}/{extension}", alt="img",
+                        style="max-width: clamp(230px, 70vw, 256px); height: auto; margin: auto;",
+                        cls="pt-2 pb-2"
+                    ),
+                    A("Hover to see URL", href=f"{log_url}", title=f"{log_url}",
+                        cls="hover:text-blue-200 transition-all duration-200 mx-auto mt-2 mb-2 font-bold"),
+                    cls="text-center",
                 ),
+                Div(cls="p-2 md:p-6"),
                 Div(
                     Button(
                         "Download QR Code",
                         onclick=f"download('{filename}', '{extension}')",
-                        cls="container",
+                        cls="btn",
                     ),
+                    cls="text-center"
                 ),
-                Div(cls="container", style="min-height: 2vw"),
+                Div(cls="p-3"),
                 Div(
                     Form(
                         Button(
                             "Return",
                             type="submit",
-                            cls="container",
+                            cls="btn",
                         ),
                         action="/",
                         method="get",
                     ),
+                    cls="text-center"
                 ),
+                cls="bg-dark-theme-gray text-gray-100 h-full place-content-center text-lg"
             )
         )
 
