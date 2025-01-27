@@ -103,7 +103,9 @@ def homepage():
                             name="url",
                             required=True,
                             placeholder="Your URL",
-                            cls="max-w-[80vw] w-80 sm:w-3/5 md:w-2/4 lg:w-1/3 bg-dark-theme-lightgray text-gray-100 pl-2 min-h-9 rounded-md shadow-md shadow-black",
+                            cls="max-w-[80vw] w-80 sm:w-3/5 md:w-2/4 lg:w-1/3 \
+                                bg-dark-theme-lightgray text-gray-100 \
+                                pl-2 min-h-9 rounded-md shadow-md shadow-black",
                         ),
                         cls="",
                     ),
@@ -166,15 +168,19 @@ def code_ready(filename: str, extension: str):
                 Link(rel="icon", href="images/favicon.png", type="image/png"),
             ),
             Body(
-                Titled("QR Code Ready", cls="text-3xl md:text-5xl font-bold mb-8 md:p-2 p-0.5 text-center xl:text-center"),
+                Titled("QR Code Ready",
+                        cls="text-3xl md:text-5xl font-bold \
+                            mb-8 md:p-2 p-0.5 text-center xl:text-center"),
                 Div(
-                    H3("Preview", cls="text-xl md:text-2xl font-bold pb-2 text-center xl:text-center"),
+                    H3("Preview",
+                       cls="text-xl md:text-2xl font-bold pb-2 text-center xl:text-center"),
                     Img(src=f"/download/{filename}/{extension}", alt="img",
                         style="max-width: clamp(230px, 70vw, 256px); height: auto; margin: auto;",
                         cls="pt-2 pb-2"
                     ),
                     A("Hover to see URL", href=f"{log_url}", title=f"{log_url}",
-                        cls="hover:text-blue-200 transition-all duration-200 mx-auto mt-2 mb-2 font-bold"),
+                        cls="hover:text-blue-200 \
+                            transition-all duration-200 mx-auto mt-2 mb-2 font-bold"),
                     cls="text-center",
                 ),
                 Div(cls="p-2 md:p-6"),
